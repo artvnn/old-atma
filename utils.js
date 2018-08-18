@@ -1,6 +1,6 @@
-const fs = require('fs');
-const rmdir = require('rmdir');
-const ncp = require('ncp');
+const fs = require("fs");
+const rmdir = require("rmdir");
+const ncp = require("ncp");
 
 let first = list =>
 	list != null && list != undefined

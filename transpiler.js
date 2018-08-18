@@ -1,22 +1,22 @@
-const path = require('path');
-const fs = require('fs');
-const utils = require('./utils');
+const path = require("path");
+const fs = require("fs");
+const utils = require("./utils");
 const rmdir = utils.rmdir;
-const mkdirp = require('mkdirp');
+const mkdirp = require("mkdirp");
 const deepCopy = utils.deepCopy;
 
 module.exports = function(inputs) {
 	return new Promise((resolve, reject) => {
 		if (!inputs) {
-			reject('No inputs given');
+			reject("No inputs given");
 		} else if (!inputs.source) {
-			reject('No source folder is specified');
+			reject("No source folder is specified");
 		} else if (!fs.existsSync(path.normalize(inputs.source))) {
-			reject('Source folder does not exist');
+			reject("Source folder does not exist");
 		} else if (!inputs.components) {
-			reject('No components are specified');
+			reject("No components are specified");
 		} else if (!inputs.target) {
-			reject('No target folder is specified');
+			reject("No target folder is specified");
 		} else {
 			transpile(inputs).then(
 				() => {
@@ -45,7 +45,7 @@ function transpile(inputs) {
 						// Copy the inputs files into build folder
 						let buildSourceDir = path.join(
 							inputs.build,
-							'00_source'
+							"00_source"
 						);
 						mkdirp.sync(buildSourceDir);
 						deepCopy(inputs.source, buildSourceDir).then(
@@ -77,12 +77,12 @@ function transpile(inputs) {
 				let component = inputs.components[componentIndex],
 					componentFolder = path.join(
 						inputs.build,
-						(componentIndex < 10 ? '0' : '') +
+						(componentIndex < 10 ? "0" : "") +
 							(componentIndex + 1) +
-							'_' +
+							"_" +
 							component
 					),
-					componentModule = require('./components/' + component);
+					componentModule = require("./components/" + component);
 				mkdirp.sync(componentFolder);
 				componentModule(componentInputFolder, componentFolder).then(
 					() => {
@@ -104,9 +104,9 @@ function transpile(inputs) {
 				mkdirp.sync(inputs.target);
 				var componentFolder = path.join(
 					inputs.build,
-					(inputs.components.length - 1 < 10 ? '0' : '') +
+					(inputs.components.length - 1 < 10 ? "0" : "") +
 						inputs.components.length +
-						'_' +
+						"_" +
 						inputs.components[inputs.components.length - 1]
 				);
 				deepCopy(componentFolder, inputs.target).then(

@@ -1,4 +1,4 @@
-const utils = require('../utils');
+const utils = require("../utils");
 const deepCopy = utils.deepCopy;
 
 module.exports = (inputPath, outputPath) => {
