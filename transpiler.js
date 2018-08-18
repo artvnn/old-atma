@@ -82,7 +82,10 @@ function transpile(inputs) {
 							"_" +
 							component
 					),
-					componentModule = require("./components/" + component);
+					componentModule = require(path.join(
+						__dirname,
+						"./components/" + component
+					));
 				mkdirp.sync(componentFolder);
 				componentModule(componentInputFolder, componentFolder).then(
 					() => {

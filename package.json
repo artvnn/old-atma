@@ -4,6 +4,7 @@
   "description": "",
   "main": "transpiler.js",
   "scripts": {
+    "new": "node new_project",
     "test": "mocha *.spec.js; mocha **/*.spec.js"
   },
   "keywords": [],
