@@ -1,0 +1,26 @@
+{
+  "name": "athma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "transpiler.js",
+  "scripts": {
+    "test": "mocha **/*.spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "node-promise": "^0.5.12",
+    "rmdir": "^1.2.0",
+    "tm-parser": "^1.0.2"
+  },
+  "preferGlobal": true,
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.18.2"
+  }
+}

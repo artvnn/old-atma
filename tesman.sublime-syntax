@@ -1,0 +1,72 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: TesMan
+file_extensions: [tm, tesman]
+scope: source.tesman
+
+contexts:
+  main:
+    - match: '<<'
+      scope: punctuation.definition.generic.begin
+      push: embed
+
+    - match: ''''
+      scope: punctuation.definition.string.begin.tesman
+      push: string
+
+    - match: '<%'
+      scope: punctuation.definition.string.begin.tesman
+      push: multiline_string
+
+    - match: '\('
+      scope: punctuation.section.brackets.begin.tesman
+      push: list_start
+
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.tesman
+      push: comment
+
+  embed:
+    - meta_scope: meta.preprocessor.tesman
+    - match: '>>'
+      scope: punctuation.definition.generic.end.tesman
+      pop: true
+
+  string:
+    - meta_scope: string.quoted.single.tesman
+    - match: '\\.'
+      scope: constant.character.escape.tesman
+    - match: ''''
+      scope: punctuation.definition.string.end.tesman
+      pop: true
+
+  multiline_string:
+    - meta_scope: string.quoted.other.tesman
+    - match: '%>'
+      scope: punctuation.definition.string.end.tesman
+      pop: true
+
+  list_start:
+    - meta_scope: meta.sequence.tesman
+    - match: '\)'
+      scope: punctuation.section.brackets.end.tesman
+      set: list
+    - match: '[\w=\*\/\-><&%\$#@!~`\.\?\\\|\[\]]*'
+      scope: keyword.control.flow.tesman
+      set: list
+
+  list:
+    - meta_scope: meta.paragraph.tesman
+    - match: '\)'
+      scope: punctuation.section.brackets.end.tesman
+      pop: true
+    - match: '[\w=\*\/\-><&%\$#@!~`\.\?\\\|\[\]]*'
+      scope: variable.function.tesman
+    - include: main
+
+  comment:
+    - meta_scope: comment.block.tesman
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.tesman
+      pop: true
