@@ -56,6 +56,6 @@ let l1 = [1, 2, 3];`
 		});
 	});
 	after(() => {
-		// rmdir(testPath);
+		rmdir(testPath);
 	});
 });
