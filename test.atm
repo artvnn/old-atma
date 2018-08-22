@@ -1,0 +1,92 @@
+// Test Atma file
+
+/* Multiline comment */
+
+//----------------------------------------------------------------------------------------------------------------
+// function definition with pattern matching:
+// 	fn <optional-name>
+//		=> [parameters1]
+// 			<expressions1>
+//		=> [parameters2]
+//			<expressions2>
+//	Translated to: (fn <optional-name> ((params parameters1) <expressions1) ((params parameters2) <expressions2))
+//----------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------
+// function definition without pattern matching:
+//	fn <optional-name> [paramters]
+//		<expressions>
+// Translated to: (fn <optional-name> ((params parameters) <expressions))
+//----------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------
+// function invocation:
+//	<fn-name> <arguments>
+// Translated to: (<fn-name> <arguments>)
+//----------------------------------------------------------------------------------------------------------------
+
+// Nice to have:
+// if condition at the end of any statement (Ruby)
+// types using validator functions, which can allow us to specify ranges among other things (Ada)
+
+
+sys : petzz-world `PetzzWorld application for iR`
+
+	client : cl `Web client`
+
+		string : session-token
+				 fullname
+
+		view : splash
+			message `Welcome to PetzzWorld!`
+			action `Start` => go-to-view login
+
+		view : login
+			input `Email` `Enter your registered email id`
+				-> email : user-id
+			input `Password` -> password: password
+			action `Login` =>
+				srv.login user-id password
+					=> [error : err] show-error `Unable to login: ${err}`
+					=> [token name]
+						token -> session-token
+						name -> fullname
+						go-to-view main
+
+		view : main
+			show-view common
+			message `Work in progress`
+
+		view : common
+			message fullname
+			action `Logout` =>
+				srv.logout session-token
+					=> [error : err] show-error `Unable to logout ${err}`
+					=> go-to-view login
+
+
+	server : srv `Web server`
+
+		service : login
+			=> [email : user-id, password : password]
+
+
+		service : logout
+
+
+	store : db `Database`
+
+		entity : user
+
+
+container petzz-world
+
+client : ad `Administrator Client`
+
+	view : splash
+		message `PetzzWorld Administrator`
+
+
+
+
+

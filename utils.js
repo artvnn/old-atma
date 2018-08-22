@@ -39,5 +39,7 @@ module.exports = {
 	},
 	first: first,
 	rest: rest,
-	second: list => first(rest(list))
+	second: list => first(rest(list)),
+	replaceAll: (str, s1, s2) => str.split(s1).join(s2),
+	pipe: (...fns) => data => fns.reduce((acc, fn) => fn(acc), data)
 };

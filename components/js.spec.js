@@ -1,11 +1,9 @@
 const utils = require("../utils");
-const assert = require("chai").assert;
 const expect = require("chai").expect;
 const mkdirp = require("mkdirp");
 const path = require("path");
 const fs = require("fs");
 const rmdir = utils.rmdir;
-const clone = utils.clone;
 const js = require("./js");
 
 require("../test_setup.js");

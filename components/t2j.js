@@ -1,11 +1,5 @@
-const utils = require("../utils");
-const assert = require("chai").assert;
-const expect = require("chai").expect;
-const mkdirp = require("mkdirp");
 const path = require("path");
 const fs = require("fs");
-const rmdir = utils.rmdir;
-const clone = utils.clone;
 const tmParser = require("tm-parser");
 
 module.exports = (inputPath, outputPath) => {

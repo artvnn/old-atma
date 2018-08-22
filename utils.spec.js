@@ -102,4 +102,31 @@ describe("Utils:", () => {
 			expect(second([])).to.equal(null);
 		});
 	});
+	describe("replaceAll:", () => {
+		let replaceAll = utils.replaceAll;
+		it("should replace all instances of given substring", () => {
+			expect(replaceAll(" ab cd ab cd 123abcd", "ab", "xy")).to.equal(
+				" xy cd xy cd 123xycd"
+			);
+		});
+	});
+	describe("pipe:", () => {
+		let pipe = utils.pipe;
+		it("should invoke the given functions in sequence from left to right", () => {
+			const inc = x => x + 1;
+			const double = x => x * 2;
+			expect(
+				pipe(
+					inc,
+					double
+				)(10)
+			).to.equal(22);
+			expect(
+				pipe(
+					double,
+					inc
+				)(10)
+			).to.equal(21);
+		});
+	});
 });

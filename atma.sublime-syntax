@@ -1,0 +1,87 @@
+%YAML 1.2
+---
+
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: Atma
+file_extensions: [atm, atma]
+scope: source.atma
+
+contexts:
+  main:
+    # Block comments are enclosed within '/*' and '*/'
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.atma
+      push: comment
+
+    # Comments begin with a '//' and finish at the end of the line
+    - match: '//'
+      scope: punctuation.definition.comment.atma
+      push: line_comment
+
+    # Keywords are if, else for and while.
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '\b(container|sys|client|view|message|input|action|server|service|def|string|error|go-to-view|show-view|show-error|show-info|if|else|for|while)\b'
+      scope: keyword.control.atma
+
+    # Numbers
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.atma
+
+    # operators
+    - match: '(:|=>>|=>|->)'
+      scope: variable.function.atma
+
+    - match: '`'
+      scope: punctuation.definition.string.begin.atma
+      push: multiline_string
+
+    - match: '\('
+      scope: punctuation.section.brackets.begin.atma
+      push: list_start
+
+  comment:
+    - meta_scope: comment.block.atma
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.atma
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.atma
+    - match: $
+      pop: true
+
+  multiline_string:
+    - meta_scope: string.quoted.other.atma
+    - match: '\${'
+      push: expression
+    - match: '`'
+      scope: punctuation.definition.string.end.atma
+      pop: true
+
+  expression:
+    - meta_scope: variable.function.atma
+    - include: main
+    - match: '}'
+      pop: true
+
+  list_start:
+    - meta_scope: meta.sequence.atma
+    - match: '\)'
+      scope: punctuation.section.brackets.end.atma
+      set: list
+    - match: '[\w=\*\/\-><&%\$#@!~`\.\?\\\|\[\]]*'
+      scope: keyword.control.flow.atma
+      set: list
+
+  list:
+    - meta_scope: meta.paragraph.atma
+    - match: '\)'
+      scope: punctuation.section.brackets.end.atma
+      pop: true
+    - match: '[\w=\*\/\-><&%\$#@!~`\.\?\\\|\[\]]*'
+      scope: variable.function.atma
+    - include: main
+
