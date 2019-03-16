@@ -2,10 +2,10 @@
   "name": "athma",
   "version": "1.0.0",
   "description": "",
-  "main": "transpiler.js",
+  "main": "src/transpiler.js",
   "scripts": {
-    "new": "node new_project",
-    "test": "mocha *.spec.js; mocha **/*.spec.js"
+    "new": "node src/new_project",
+    "test": "mocha --watch --recursive src/**/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "ncp": "^2.0.0",
     "nearley": "^2.15.1",
     "node-promise": "^0.5.12",
+    "prettier": "^1.16.4",
     "rmdir": "^1.2.0",
     "shelljs": "^0.8.2",
     "tm-parser": "^1.0.2"

@@ -1,5 +1,4 @@
 const utils = require("./utils");
-const assert = require("chai").assert;
 const expect = require("chai").expect;
 const mkdirp = require("mkdirp");
 const path = require("path");
@@ -103,7 +102,7 @@ describe("Athma Transpiler:", () => {
 			options.components.forEach(function(component, idx) {
 				let folder = path.join(
 					buildDir,
-					(idx < 10 ? "0" : "") + (idx + 1) + "_" + component
+					(idx < 10 ? "0" : "") + (idx + 1) + "_00_" + component
 				);
 				if (!fs.existsSync(folder)) folderNotFound = true;
 			});
@@ -115,7 +114,7 @@ describe("Athma Transpiler:", () => {
 		return transpiler(options).then(() => {
 			let sourceFile = path.join(buildDir, "00_source", "main.tm"),
 				sourceFileExists = fs.existsSync(sourceFile),
-				targetFile = path.join(buildDir, "01_mock", "main.tm"),
+				targetFile = path.join(buildDir, "01_00_mock", "main.tm"),
 				targetFileExists = fs.existsSync(targetFile);
 			expect(sourceFileExists && targetFileExists).to.equal(true);
 		});
@@ -140,6 +139,21 @@ describe("Athma Transpiler:", () => {
 			let targetFile = path.join(targetDir, "main.tm"),
 				targetFileExists = fs.existsSync(targetFile);
 			expect(targetFileExists).to.equal(true);
+		});
+	});
+	it("should accept arrays of components", () => {
+		let options = clone(optionsOriginal);
+		options.components = ["mock", ["mock", "mock"]];
+		return transpiler(options).then(() => {
+			expect(fs.existsSync(path.join(buildDir, "01_00_mock"))).to.equal(
+				true
+			);
+			expect(fs.existsSync(path.join(buildDir, "02_00_mock"))).to.equal(
+				true
+			);
+			expect(fs.existsSync(path.join(buildDir, "02_01_mock"))).to.equal(
+				true
+			);
 		});
 	});
 	afterEach(() => {

@@ -66,19 +66,19 @@ function transpile(inputs) {
 			);
 		}
 
-		function processComponents(componentIndex) {
-			try {
-				componentIndex = componentIndex || 0;
-				if (componentIndex >= inputs.components.length) {
-					// No more components to be processed
-					processOutput();
-					return;
-				}
-				let component = inputs.components[componentIndex],
-					componentFolder = path.join(
+		function padLeft0(num) {
+			return (num < 10 ? "0" : "") + num;
+		}
+
+		function processComponent(componentIndex) {
+			let temp = inputs.components[componentIndex];
+			if (!(temp instanceof Array)) temp = [temp];
+			temp.forEach((component, subIndex) => {
+				let componentFolder = path.join(
 						inputs.build,
-						(componentIndex < 10 ? "0" : "") +
-							(componentIndex + 1) +
+						padLeft0(componentIndex + 1) +
+							"_" +
+							padLeft0(subIndex) +
 							"_" +
 							component
 					),
@@ -89,13 +89,30 @@ function transpile(inputs) {
 				mkdirp.sync(componentFolder);
 				componentModule(componentInputFolder, componentFolder).then(
 					() => {
-						componentInputFolder = componentFolder;
-						process.nextTick(processComponents, componentIndex + 1);
+						if (subIndex === temp.length - 1) {
+							componentInputFolder = componentFolder;
+							process.nextTick(
+								processComponents,
+								componentIndex + 1
+							);
+						}
 					},
 					e => {
 						reject(e);
 					}
 				);
+			});
+		}
+
+		function processComponents(componentIndex) {
+			try {
+				componentIndex = componentIndex || 0;
+				if (componentIndex >= inputs.components.length) {
+					// No more components to be processed
+					processOutput();
+					return;
+				}
+				processComponent(componentIndex);
 			} catch (err) {
 				reject(err);
 			}
@@ -105,12 +122,15 @@ function transpile(inputs) {
 			try {
 				// Create target folder and copy results of the last component into it
 				mkdirp.sync(inputs.target);
-				var componentFolder = path.join(
+				let lastOne = inputs.components[inputs.components.length - 1];
+				if (!(lastOne instanceof Array)) lastOne = [lastOne];
+				let componentFolder = path.join(
 					inputs.build,
-					(inputs.components.length - 1 < 10 ? "0" : "") +
-						inputs.components.length +
+					padLeft0(inputs.components.length) +
 						"_" +
-						inputs.components[inputs.components.length - 1]
+						padLeft0(0) +
+						"_" +
+						lastOne[lastOne.length - 1]
 				);
 				deepCopy(componentFolder, inputs.target).then(
 					() => {

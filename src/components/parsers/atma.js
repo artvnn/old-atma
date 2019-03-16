@@ -1,9 +1,9 @@
-// Generated automatically by nearley, version 2.15.1
+// Generated automatically by nearley, version 2.16.0
 // http://github.com/Hardmath123/nearley
 (function () {
 function id(x) { return x[0]; }
 
-	const nuller = d => null;
+const nuller = d => null;
 var grammar = {
     Lexer: undefined,
     ParserRules: [

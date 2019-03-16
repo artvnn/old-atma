@@ -1,4 +1,4 @@
-const utils = require("../utils");
+const utils = require("../../utils");
 const expect = require("chai").expect;
 const mkdirp = require("mkdirp");
 const path = require("path");
@@ -6,7 +6,7 @@ const fs = require("fs");
 const rmdir = utils.rmdir;
 const js = require("./js");
 
-require("../test_setup.js");
+require("../../test_setup.js");
 
 describe("Javascript Translator", () => {
 	let testPath;

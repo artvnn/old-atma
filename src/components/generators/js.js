@@ -1,4 +1,4 @@
-const utils = require("../utils");
+const utils = require("../../utils");
 const path = require("path");
 const fs = require("fs");
 const first = utils.first;
