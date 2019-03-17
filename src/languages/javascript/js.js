@@ -8,10 +8,10 @@ const dataType = ast => {
 	var val = "";
 	switch (type) {
 		case "String":
-			val = `'${second(ast)}'`;
+			val = `"${second(ast)}"`;
 			break;
 		case "Date":
-			val = `new Date('${second(ast)}')`;
+			val = `new Date("${second(ast)}")`;
 			break;
 		case "List":
 			val = `[${rest(second(ast)).join(", ")}]`;

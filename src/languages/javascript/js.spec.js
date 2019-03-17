@@ -22,11 +22,11 @@ describe("Javascript Translator", () => {
 let b2 = false;
 let i1 = 123;
 let i2 = 1234567890;
-let s1 = 'Manoj';
-let s2 = 'Kumar';
+let s1 = "Manoj";
+let s2 = "Kumar";
 let f1 = 1.23;
 let f2 = 1234.5678;
-let d1 = new Date('2018/07/17');
+let d1 = new Date("2018/07/17");
 let l1 = [1, 2, 3];`;
 
 		expect(generatedJsCode).to.equal(expectedJsCode);
