@@ -1,5 +1,4 @@
 const utils = require("./utils");
-const assert = require("chai").assert;
 const expect = require("chai").expect;
 const mkdirp = require("mkdirp");
 const path = require("path");
@@ -99,6 +98,20 @@ describe("Utils:", () => {
 		});
 		it("should return null if list is empty", () => {
 			expect(second([])).to.equal(null);
+		});
+	});
+	describe("nth:", () => {
+		let nth = utils.nth;
+		it("should return null if list is null", () => {
+			expect(nth(null, 1)).to.equal(null);
+			expect(nth(undefined, 1)).to.equal(null);
+		});
+		it("should return null if list is empty", () => {
+			expect(nth([], 1)).to.equal(null);
+		});
+		it("should return nth element of the given list", () => {
+			expect(nth([1, 2, 3], 1)).to.equal(2);
+			expect(nth([1, 2, 3], 2)).to.equal(3);
 		});
 	});
 	describe("replaceAll:", () => {

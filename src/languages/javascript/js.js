@@ -2,41 +2,46 @@ const utils = require("../../utils");
 const first = utils.first;
 const rest = utils.rest;
 const second = utils.second;
+const isList = utils.isList;
 
-const dataType = ast => {
-	let type = first(ast);
-	var val = "";
-	switch (type) {
-		case "String":
-			val = `"${second(ast)}"`;
-			break;
-		case "Date":
-			val = `new Date("${second(ast)}")`;
-			break;
-		case "List":
-			val = `[${rest(second(ast)).join(", ")}]`;
-			break;
-		default:
-			val = second(ast);
-			break;
-	}
-	return val;
-};
+const operator = ast =>
+	`(${rest(ast)
+		.map(translate)
+		.join(` ${first(ast)} `)})`;
 
 const translate = ast => {
+	if (!isList(ast)) return ast;
 	let codeLines = [];
 	let fn = first(ast);
-	if (fn instanceof Array) {
+	if (isList(fn)) {
 		codeLines = ast.map(translate);
 	} else {
 		switch (fn) {
 			case "let":
-				codeLines.push(`let ${second(ast)} = ${dataType(rest(ast))};`);
+				codeLines.push(`let ${second(ast)} = ${translate(rest(rest(ast)))};`);
+				break;
+			case "+":
+			case "-":
+			case "/":
+			case "*":
+				codeLines.push(`${operator(ast)}`);
+				break;
+			case "String":
+				codeLines.push(`"${translate(rest(ast))}"`);
+				break;
+			case "Date":
+				codeLines.push(`(new Date("${translate(rest(ast))}"))`);
+				break;
+			case "List":
+				codeLines.push(`[${rest(second(ast).map(translate)).join(", ")}]`);
+				break;
+			case "Bool":
+			case "Int":
+			case "Float":
+				codeLines.push(`${translate(rest(ast))}`);
 				break;
 			default:
-				throw new Error(
-					"Invalid element: " + fn + ", ast: " + JSON.stringify(ast)
-				);
+				return ast;
 		}
 	}
 	return codeLines;
