@@ -6,6 +6,7 @@ const fs = require("fs");
 const rmdir = utils.rmdir;
 const t2j = require("./t2j");
 
+/* eslint-env node, mocha */
 require("../../test_setup.js");
 
 describe("Tesman to JSON convertor: ", () => {

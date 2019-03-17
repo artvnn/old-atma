@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const rmdir = utils.rmdir;
 
+/* eslint-env node, mocha */
 require("./test_setup.js");
 
 describe("Utils:", () => {
@@ -23,9 +24,7 @@ describe("Utils:", () => {
 			return new Promise((resolve, reject) => {
 				rmdir(folder).then(
 					() => {
-						fs.existsSync(folder)
-							? reject("Folder exists")
-							: resolve();
+						fs.existsSync(folder) ? reject("Folder exists") : resolve();
 					},
 					e => {
 						reject(e);
@@ -49,9 +48,9 @@ describe("Utils:", () => {
 			mkdirp.sync(path.join(sourceFolder, "f2", "f3"));
 			let targetFolder = path.join(__dirname, "test", "temp");
 			return deepCopy(sourceFolder, targetFolder).then(() => {
-				expect(
-					fs.existsSync(path.join(targetFolder, "f2", "f3"))
-				).to.equal(true);
+				expect(fs.existsSync(path.join(targetFolder, "f2", "f3"))).to.equal(
+					true
+				);
 			});
 		});
 		after(() => {

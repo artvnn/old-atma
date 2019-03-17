@@ -8,10 +8,7 @@ module.exports = (inputPath, outputPath) => {
 
 	return new Promise((resolve, reject) => {
 		try {
-			let tmFile = fs.readFileSync(
-				path.join(inputPath, "main.tm"),
-				"utf8"
-			);
+			let tmFile = fs.readFileSync(path.join(inputPath, "main.tm"), "utf8");
 			tmFile = embedFiles(tmFile);
 			fs.writeFileSync(path.join(inputPath, "main_embedded.tm"), tmFile);
 			fs.writeFileSync(

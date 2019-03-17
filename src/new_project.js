@@ -1,4 +1,5 @@
 // TODO: Tests need to be created
+/* eslint-disable  no-console */
 const path = require("path");
 const fs = require("fs");
 const mkdirp = require("mkdirp");
@@ -16,7 +17,7 @@ const project = {
 	source: path.join(prjName, "source"),
 	target: path.join(prjName, "target"),
 	components: ["a2s", "s2j"],
-	build: path.join(prjName, "build")
+	build: path.join(prjName, "build"),
 };
 mkdirp.sync(project.source);
 fs.writeFileSync(path.join(project.source, "main.atm"), "// TODO\n");

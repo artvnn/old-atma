@@ -6,6 +6,7 @@
 // const a2t = require("./a2t");
 // const rmdir = utils.rmdir;
 
+/* eslint-env node, mocha */
 // require("../test_setup.js");
 
 // describe("Atma to Tesman Translator", () => {

@@ -3,11 +3,7 @@ const rmdir = require("rmdir");
 const ncp = require("ncp");
 
 let first = list =>
-	list != null && list != undefined
-		? list.length > 0
-			? list[0]
-			: null
-		: null;
+	list != null && list != undefined ? (list.length > 0 ? list[0] : null) : null;
 
 let rest = list => {
 	list = list != null && list != undefined ? list : [];
@@ -41,5 +37,5 @@ module.exports = {
 	rest: rest,
 	second: list => first(rest(list)),
 	replaceAll: (str, s1, s2) => str.split(s1).join(s2),
-	pipe: (...fns) => data => fns.reduce((acc, fn) => fn(acc), data)
+	pipe: (...fns) => data => fns.reduce((acc, fn) => fn(acc), data),
 };

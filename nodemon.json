@@ -1,4 +1,4 @@
 {
-  "verbose": true,
-  "ignore": ["projects/*/build/*", "projects/*/target/*"]
+	"verbose": true,
+	"ignore": ["projects/*/build/*", "projects/*/target/*"]
 }

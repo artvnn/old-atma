@@ -22,9 +22,7 @@ module.exports = (inputPath, outputPath) => {
 	function toTesmanCode(atmaCode) {
 		shell.exec(`nearleyc ${__dirname}/atma.ne -o ${__dirname}/atma.js`);
 		const grammar = require("./atma.js");
-		const parser = new nearley.Parser(
-			nearley.Grammar.fromCompiled(grammar)
-		);
+		const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 		try {
 			parser.feed(atmaCode);
 			return parser.results;
@@ -131,10 +129,7 @@ module.exports = (inputPath, outputPath) => {
 
 	return new Promise((resolve, reject) => {
 		try {
-			let atmaCode = fs.readFileSync(
-				path.join(inputPath, "main.atm"),
-				"utf8"
-			);
+			let atmaCode = fs.readFileSync(path.join(inputPath, "main.atm"), "utf8");
 			fs.writeFileSync(
 				path.join(outputPath, "main.tm"),
 				toTesmanCode(atmaCode)

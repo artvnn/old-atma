@@ -7,6 +7,7 @@ const rmdir = utils.rmdir;
 const clone = utils.clone;
 const transpiler = require("./transpiler");
 
+/* eslint-env node, mocha */
 require("./test_setup.js");
 
 describe("Athma Transpiler:", () => {
@@ -18,7 +19,7 @@ describe("Athma Transpiler:", () => {
 			source: sourceDir,
 			target: targetDir,
 			components: ["mock"],
-			build: buildDir
+			build: buildDir,
 		};
 	beforeEach(() => {
 		return new Promise(function(resolve, reject) {
@@ -26,10 +27,7 @@ describe("Athma Transpiler:", () => {
 				() => {
 					try {
 						mkdirp.sync(sourceDir);
-						fs.writeFileSync(
-							path.join(sourceDir, "main.tm"),
-							"/* main.tm */"
-						);
+						fs.writeFileSync(path.join(sourceDir, "main.tm"), "/* main.tm */");
 						resolve();
 					} catch (err) {
 						reject(err);
@@ -145,15 +143,9 @@ describe("Athma Transpiler:", () => {
 		let options = clone(optionsOriginal);
 		options.components = ["mock", ["mock", "mock"]];
 		return transpiler(options).then(() => {
-			expect(fs.existsSync(path.join(buildDir, "01_00_mock"))).to.equal(
-				true
-			);
-			expect(fs.existsSync(path.join(buildDir, "02_00_mock"))).to.equal(
-				true
-			);
-			expect(fs.existsSync(path.join(buildDir, "02_01_mock"))).to.equal(
-				true
-			);
+			expect(fs.existsSync(path.join(buildDir, "01_00_mock"))).to.equal(true);
+			expect(fs.existsSync(path.join(buildDir, "02_00_mock"))).to.equal(true);
+			expect(fs.existsSync(path.join(buildDir, "02_01_mock"))).to.equal(true);
 		});
 	});
 	afterEach(() => {

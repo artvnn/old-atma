@@ -43,10 +43,7 @@ function transpile(inputs) {
 						// Create Build Folder
 						mkdirp.sync(inputs.build);
 						// Copy the inputs files into build folder
-						let buildSourceDir = path.join(
-							inputs.build,
-							"00_source"
-						);
+						let buildSourceDir = path.join(inputs.build, "00_source");
 						mkdirp.sync(buildSourceDir);
 						deepCopy(inputs.source, buildSourceDir).then(
 							() => {
@@ -91,10 +88,7 @@ function transpile(inputs) {
 					() => {
 						if (subIndex === temp.length - 1) {
 							componentInputFolder = componentFolder;
-							process.nextTick(
-								processComponents,
-								componentIndex + 1
-							);
+							process.nextTick(processComponents, componentIndex + 1);
 						}
 					},
 					e => {

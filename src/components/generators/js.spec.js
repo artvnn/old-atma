@@ -6,6 +6,7 @@ const fs = require("fs");
 const rmdir = utils.rmdir;
 const js = require("./js");
 
+/* eslint-env node, mocha */
 require("../../test_setup.js");
 
 describe("Javascript Translator", () => {
@@ -32,12 +33,12 @@ describe("Javascript Translator", () => {
 				["let", "f1", "Float", "1.23"],
 				["let", "f2", "Float", "1234.5678"],
 				["let", "d1", "Date", "2018/07/17"],
-				["let", "l1", "List", ["`", "1", "2", "3"]]
+				["let", "l1", "List", ["`", "1", "2", "3"]],
 			])
 		);
 		return js(inputPath, outputPath).then(() => {
 			let fileData = fs.readFileSync(path.join(outputPath, "main.js"), {
-				encoding: "utf8"
+				encoding: "utf8",
 			});
 			expect(fileData).to.equal(
 				`let b1 = true;

@@ -50,10 +50,7 @@ module.exports = (inputPath, outputPath) => {
 				fs.readFileSync(path.join(inputPath, "main.json"), "utf8")
 			);
 			let codeLines = translate(ast);
-			fs.writeFileSync(
-				path.join(outputPath, "main.js"),
-				codeLines.join("\n")
-			);
+			fs.writeFileSync(path.join(outputPath, "main.js"), codeLines.join("\n"));
 			resolve();
 		} catch (err) {
 			reject(err);
